@@ -1,9 +1,8 @@
-
 import React from 'react';
 import { StyleSheet, View, Text, Dimensions } from 'react-native';
 import MapView, { Marker, ProviderPropType } from 'react-native-maps';
-import flagBlueImg from './assets/marker.jpg';
-import flagPinkImg from './assets/marker.jpg';
+import markerImg from './assets/marker.png';
+
 
 const { width, height } = Dimensions.get('window');
 
@@ -36,45 +35,33 @@ class MarkerTypes extends React.Component {
             longitudeDelta: LONGITUDE_DELTA,
           }}
         >
-          <Marker
-            onPress={() => this.setState({ marker1: !this.state.marker1 })}
-            coordinate={{
-              latitude: LATITUDE + SPACE,
-              longitude: LONGITUDE + SPACE,
-            }}
-            centerOffset={{ x: -18, y: -60 }}
-            anchor={{ x: 0.69, y: 1 }}
-            image={this.state.marker1 ? flagBlueImg : flagPinkImg}
-          >
-            <Text style={styles.marker}>X</Text>
-          </Marker>
-          <Marker
-            onPress={() => this.setState({ marker2: !this.state.marker2 })}
-            coordinate={{
-              latitude: LATITUDE - SPACE,
-              longitude: LONGITUDE - SPACE,
-            }}
-            centerOffset={{ x: -42, y: -60 }}
-            anchor={{ x: 0.84, y: 1 }}
-            image={this.state.marker2 ? flagBlueImg : flagPinkImg}
-          />
-          <Marker
-            onPress={() => this.setState({ marker2: !this.state.marker2 })}
-            coordinate={{
-              latitude: LATITUDE + SPACE,
-              longitude: LONGITUDE - SPACE,
-            }}
-            centerOffset={{ x: -42, y: -60 }}
-            anchor={{ x: 0.84, y: 1 }}
-            opacity={0.6}
-            image={this.state.marker2 ? flagBlueImg : flagPinkImg}
-          />
+          {addMarker(LATITUDE,LONGITUDE,"Banana",1.6)}
         </MapView>
       </View>
     );
   }
-}
 
+}
+const addMarker=(Latitude:number,Longitude:number,item:string,distance:number)=>{
+  return (
+    <Marker
+    // onPress={() => this.setState({ marker1: !this.state.marker1 })}
+    coordinate={{
+      latitude: Latitude,
+      longitude: Longitude,
+    }}
+    centerOffset={{ x: -18, y: -60 }}
+    anchor={{ x: 0.69, y: 1 }}
+    image={markerImg}
+  >
+    <Text style={styles.marker}>
+      {item}
+    </Text>
+    <Text style={styles.marker}>
+      {distance} mi</Text>
+  </Marker>
+  ) 
+}
 MarkerTypes.propTypes = {
   provider: ProviderPropType,
 };
@@ -89,8 +76,8 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   marker: {
-    marginLeft: 46,
-    marginTop: 33,
+    marginLeft: 33,
+    marginTop: 0,
     fontWeight: 'bold',
   },
 });
